@@ -18,12 +18,12 @@ namespace MultiplayerARPG
                 return cachePhysicCharBehaviour;
             }
         }
-
+        
         public override void UpdateAnimation(bool isDead, Vector3 moveVelocity, float playMoveSpeedMultiplier = 1)
         {
         }
 
-        public override Coroutine PlayActionAnimation(int actionId, AnimActionType animActionType, float playSpeedMultiplier = 1)
+        public override Coroutine PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1)
         {
             return null;
         }
@@ -35,5 +35,28 @@ namespace MultiplayerARPG
         public override void PlayJumpAnimation()
         {
         }
+    }
+
+    [System.Serializable]
+    public struct CharacterAnimation2D
+    {
+        public AnimationClip bottom;
+        public AnimationClip top;
+        public AnimationClip left;
+        public AnimationClip right;
+    }
+
+    [System.Serializable]
+    public struct WeaponAttack2D
+    {
+        public WeaponType weaponType;
+        public CharacterAnimation2D animation;
+    }
+    
+    [System.Serializable]
+    public struct SkillCast2D
+    {
+        public Skill skill;
+        public CharacterAnimation2D animation;
     }
 }
