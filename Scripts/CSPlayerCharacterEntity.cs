@@ -6,7 +6,7 @@ using CreativeSpore.RpgMapEditor;
 namespace MultiplayerARPG
 {
     [RequireComponent(typeof(PhysicCharBehaviour))]
-    [RequireComponent(typeof(CSCharacterModel))]
+    [RequireComponent(typeof(CharacterModel2D))]
     public partial class CSPlayerCharacterEntity : BasePlayerCharacterEntity
     {
         private PhysicCharBehaviour cachePhysicCharBehaviour;
