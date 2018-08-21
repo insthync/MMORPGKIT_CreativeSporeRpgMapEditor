@@ -18,8 +18,40 @@ namespace MultiplayerARPG
                 return cachePhysicCharBehaviour;
             }
         }
+
+        public void Play2DAnim_Animator(AnimationClip clip)
+        {
+            CacheAnimator.enabled = false;
+            CacheAnimatorController[ANIM_STATE_ACTION_CLIP] = clip;
+            CacheAnimator.enabled = true;
+        }
+
+        public void Play2DAnim_Animation(AnimationClip clip)
+        {
+            if (CacheAnimation.GetClip(LEGACY_CLIP_ACTION) != null)
+                CacheAnimation.RemoveClip(LEGACY_CLIP_ACTION);
+            CacheAnimation.AddClip(clip, LEGACY_CLIP_ACTION);
+            CacheAnimation.Play(LEGACY_CLIP_ACTION);
+        }
         
         public override void UpdateAnimation(bool isDead, Vector3 moveVelocity, float playMoveSpeedMultiplier = 1)
+        {
+            switch (animatorType)
+            {
+                case AnimatorType.Animator:
+                    UpdateAnimation_Animator(isDead, moveVelocity, playMoveSpeedMultiplier);
+                    break;
+                case AnimatorType.LegacyAnimtion:
+                    UpdateAnimation_LegacyAnimation(isDead, moveVelocity, playMoveSpeedMultiplier);
+                    break;
+            }
+        }
+
+        private void UpdateAnimation_Animator(bool isDead, Vector3 moveVelocity, float playMoveSpeedMultiplier)
+        {
+        }
+
+        private void UpdateAnimation_LegacyAnimation(bool isDead, Vector3 moveVelocity, float playMoveSpeedMultiplier)
         {
         }
 
@@ -30,10 +62,12 @@ namespace MultiplayerARPG
 
         public override void PlayHurtAnimation()
         {
+            // TODO: 2D may just play blink red color
         }
 
         public override void PlayJumpAnimation()
         {
+            // TODO: 2D may able to jump
         }
     }
 
