@@ -28,6 +28,8 @@ namespace MultiplayerARPG
             }
         }
 
+        private Vector2 tempMoveDirection;
+
         protected override void EntityFixedUpdate()
         {
             base.EntityFixedUpdate();
@@ -38,20 +40,20 @@ namespace MultiplayerARPG
             if (currentDestination.HasValue)
             {
                 var currentPosition = new Vector2(CacheTransform.position.x, CacheTransform.position.y);
-                moveDirection = (currentDestination.Value - currentPosition).normalized;
+                tempMoveDirection = (currentDestination.Value - currentPosition).normalized;
                 if (Vector3.Distance(currentDestination.Value, currentPosition) < StoppingDistance)
                     StopMove();
             }
 
             if (!IsDead())
             {
-                var moveDirectionMagnitude = moveDirection.magnitude;
+                var moveDirectionMagnitude = tempMoveDirection.magnitude;
                 if (!IsPlayingActionAnimation() && moveDirectionMagnitude != 0)
                 {
                     if (moveDirectionMagnitude > 1)
-                        moveDirection = moveDirection.normalized;
-                    UpdateCurrentDirection(moveDirection);
-                    CachePhysicCharBehaviour.Dir = moveDirection;
+                        tempMoveDirection = tempMoveDirection.normalized;
+                    UpdateCurrentDirection(tempMoveDirection);
+                    CachePhysicCharBehaviour.Dir = tempMoveDirection;
                     CachePhysicCharBehaviour.MaxSpeed = CacheMoveSpeed;
                 }
 
@@ -69,7 +71,7 @@ namespace MultiplayerARPG
         public override void StopMove()
         {
             currentDestination = null;
-            moveDirection = Vector3.zero;
+            tempMoveDirection = Vector3.zero;
             CachePhysicCharBehaviour.Dir = Vector2.zero;
             if (IsOwnerClient && !IsServer)
                 CallNetFunction("StopMove", FunctionReceivers.Server);
