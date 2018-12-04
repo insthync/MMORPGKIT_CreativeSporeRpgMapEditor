@@ -74,7 +74,7 @@ namespace MultiplayerARPG
             tempMoveDirection = Vector3.zero;
             CachePhysicCharBehaviour.Dir = Vector2.zero;
             if (IsOwnerClient && !IsServer)
-                CallNetFunction("StopMove", FunctionReceivers.Server);
+                CallNetFunction(StopMove, FunctionReceivers.Server);
         }
     }
 }
