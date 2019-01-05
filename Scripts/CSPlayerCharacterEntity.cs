@@ -39,7 +39,7 @@ namespace MultiplayerARPG
 
             if (currentDestination.HasValue)
             {
-                var currentPosition = new Vector2(CacheTransform.position.x, CacheTransform.position.y);
+                Vector2 currentPosition = new Vector2(CacheTransform.position.x, CacheTransform.position.y);
                 tempMoveDirection = (currentDestination.Value - currentPosition).normalized;
                 if (Vector3.Distance(currentDestination.Value, currentPosition) < StoppingDistance)
                     StopMove();
@@ -47,7 +47,7 @@ namespace MultiplayerARPG
 
             if (!IsDead())
             {
-                var moveDirectionMagnitude = tempMoveDirection.magnitude;
+                float moveDirectionMagnitude = tempMoveDirection.magnitude;
                 if (!IsPlayingActionAnimation() && moveDirectionMagnitude != 0)
                 {
                     if (moveDirectionMagnitude > 1)
@@ -60,7 +60,7 @@ namespace MultiplayerARPG
                 BaseGameEntity tempEntity;
                 if (moveDirectionMagnitude == 0 && TryGetTargetEntity(out tempEntity))
                 {
-                    var targetDirection = (tempEntity.CacheTransform.position - CacheTransform.position).normalized;
+                    Vector3 targetDirection = (tempEntity.CacheTransform.position - CacheTransform.position).normalized;
                     if (targetDirection.magnitude != 0f)
                         UpdateCurrentDirection(targetDirection);
                 }
