@@ -48,7 +48,7 @@ namespace MultiplayerARPG
             if (!IsDead())
             {
                 float moveDirectionMagnitude = tempMoveDirection.magnitude;
-                if (!IsPlayingActionAnimation() && moveDirectionMagnitude != 0)
+                if (moveDirectionMagnitude != 0)
                 {
                     if (moveDirectionMagnitude > 1)
                         tempMoveDirection = tempMoveDirection.normalized;
