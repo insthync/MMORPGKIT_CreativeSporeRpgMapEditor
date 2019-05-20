@@ -8,7 +8,6 @@ using LiteNetLibManager;
 namespace MultiplayerARPG
 {
     [RequireComponent(typeof(PhysicCharBehaviour))]
-    [RequireComponent(typeof(CharacterModel2D))]
     public partial class CSPlayerCharacterEntity : PlayerCharacterEntity2D
     {
 
