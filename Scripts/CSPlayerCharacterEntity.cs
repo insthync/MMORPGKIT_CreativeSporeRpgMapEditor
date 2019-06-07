@@ -7,73 +7,18 @@ using LiteNetLibManager;
 
 namespace MultiplayerARPG
 {
-    [RequireComponent(typeof(PhysicCharBehaviour))]
-    public partial class CSPlayerCharacterEntity : PlayerCharacterEntity2D
+    [System.Obsolete("This is deprecated, use `PlayerCharacterEntity` instead")]
+    /// <summary>
+    /// This is deprecated, but still keep it for backward compatibilities.
+    /// Use `PlayerCharacterEntity` instead
+    /// </summary>
+    public partial class CSPlayerCharacterEntity : BasePlayerCharacterEntity
     {
-
-        public override float StoppingDistance
+        public override void InitialRequiredComponents()
         {
-            get { return stoppingDistance; }
-        }
-
-        private PhysicCharBehaviour cachePhysicCharBehaviour;
-        public PhysicCharBehaviour CachePhysicCharBehaviour
-        {
-            get
-            {
-                if (cachePhysicCharBehaviour == null)
-                    cachePhysicCharBehaviour = GetComponent<PhysicCharBehaviour>();
-                return cachePhysicCharBehaviour;
-            }
-        }
-
-        private Vector2 tempMoveDirection;
-
-        protected override void EntityFixedUpdate()
-        {
-            base.EntityFixedUpdate();
-            Profiler.BeginSample("PlayerCharacterEntity2D - FixedUpdate");
-            if (!IsServer && !IsOwnerClient)
-                return;
-
-            if (currentDestination.HasValue)
-            {
-                Vector2 currentPosition = new Vector2(CacheTransform.position.x, CacheTransform.position.y);
-                tempMoveDirection = (currentDestination.Value - currentPosition).normalized;
-                if (Vector3.Distance(currentDestination.Value, currentPosition) < StoppingDistance)
-                    StopMove();
-            }
-
-            if (!IsDead())
-            {
-                float moveDirectionMagnitude = tempMoveDirection.magnitude;
-                if (moveDirectionMagnitude != 0)
-                {
-                    if (moveDirectionMagnitude > 1)
-                        tempMoveDirection = tempMoveDirection.normalized;
-                    UpdateCurrentDirection(tempMoveDirection);
-                    CachePhysicCharBehaviour.Dir = tempMoveDirection;
-                    CachePhysicCharBehaviour.MaxSpeed = CacheMoveSpeed;
-                }
-
-                BaseGameEntity tempEntity;
-                if (moveDirectionMagnitude == 0 && TryGetTargetEntity(out tempEntity))
-                {
-                    Vector3 targetDirection = (tempEntity.CacheTransform.position - CacheTransform.position).normalized;
-                    if (targetDirection.magnitude != 0f)
-                        UpdateCurrentDirection(targetDirection);
-                }
-            }
-            Profiler.EndSample();
-        }
-        
-        public override void StopMove()
-        {
-            currentDestination = null;
-            tempMoveDirection = Vector3.zero;
-            CachePhysicCharBehaviour.Dir = Vector2.zero;
-            if (IsOwnerClient && !IsServer)
-                CallNetFunction(StopMove, FunctionReceivers.Server);
+            CharacterMovement = GetComponent<BaseCharacterMovement>();
+            if (CharacterMovement == null)
+                CharacterMovement = gameObject.AddComponent<CSPhysicCharacterMovement>();
         }
     }
 }
