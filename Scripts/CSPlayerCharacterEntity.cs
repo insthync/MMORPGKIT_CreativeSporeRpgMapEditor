@@ -16,9 +16,8 @@ namespace MultiplayerARPG
     {
         public override void InitialRequiredComponents()
         {
-            CharacterMovement = GetComponent<BaseEntityMovement>();
-            if (CharacterMovement == null)
-                CharacterMovement = gameObject.AddComponent<CSPhysicCharacterMovement>();
+            if (Movement == null)
+                Movement = gameObject.AddComponent<CSPhysicCharacterMovement>();
         }
     }
 }
