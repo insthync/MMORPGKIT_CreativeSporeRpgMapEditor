@@ -47,11 +47,11 @@ namespace MultiplayerARPG
                         tempMoveDirection = tempMoveDirection.normalized;
                     UpdateCurrentDirection(tempMoveDirection);
                     CachePhysicCharBehaviour.Dir = tempMoveDirection;
-                    CachePhysicCharBehaviour.MaxSpeed = gameplayRule.GetMoveSpeed(CacheCharacterEntity);
+                    CachePhysicCharBehaviour.MaxSpeed = gameplayRule.GetMoveSpeed(CacheEntity);
                 }
 
                 BaseGameEntity tempEntity;
-                if (moveDirectionMagnitude == 0 && CacheCharacterEntity.TryGetTargetEntity(out tempEntity))
+                if (moveDirectionMagnitude == 0 && CacheEntity.TryGetTargetEntity(out tempEntity))
                 {
                     Vector3 targetDirection = (tempEntity.CacheTransform.position - CacheTransform.position).normalized;
                     if (targetDirection.magnitude != 0f)
@@ -66,7 +66,7 @@ namespace MultiplayerARPG
             tempMoveDirection = Vector3.zero;
             CachePhysicCharBehaviour.Dir = Vector2.zero;
             if (IsOwnerClient && !IsServer)
-                CacheCharacterEntity.CallNetFunction(StopMove, FunctionReceivers.Server);
+                CacheEntity.CallNetFunction(StopMove, FunctionReceivers.Server);
         }
     }
 }
