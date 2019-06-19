@@ -7,7 +7,7 @@ using LiteNetLibManager;
 namespace MultiplayerARPG
 {
     [RequireComponent(typeof(PhysicCharBehaviour))]
-    public class CSPhysicCharacterMovement : RigidBodyCharacterMovement2D
+    public class CSPhysicCharacterMovement : RigidBodyEntityMovement2D
     {
         private PhysicCharBehaviour cachePhysicCharBehaviour;
         public PhysicCharBehaviour CachePhysicCharBehaviour
