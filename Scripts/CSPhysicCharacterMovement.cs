@@ -38,7 +38,7 @@ namespace MultiplayerARPG
                     StopMove();
             }
 
-            if (!IsDead())
+            if (CacheEntity.CanMove())
             {
                 float moveDirectionMagnitude = tempMoveDirection.magnitude;
                 if (moveDirectionMagnitude != 0)
@@ -47,15 +47,7 @@ namespace MultiplayerARPG
                         tempMoveDirection = tempMoveDirection.normalized;
                     UpdateCurrentDirection(tempMoveDirection);
                     CachePhysicCharBehaviour.Dir = tempMoveDirection;
-                    CachePhysicCharBehaviour.MaxSpeed = gameplayRule.GetMoveSpeed(CacheEntity);
-                }
-
-                BaseGameEntity tempEntity;
-                if (moveDirectionMagnitude == 0 && CacheEntity.TryGetTargetEntity(out tempEntity))
-                {
-                    Vector3 targetDirection = (tempEntity.CacheTransform.position - CacheTransform.position).normalized;
-                    if (targetDirection.magnitude != 0f)
-                        UpdateCurrentDirection(targetDirection);
+                    CachePhysicCharBehaviour.MaxSpeed = CacheEntity.GetMoveSpeed();
                 }
             }
         }
