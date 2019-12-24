@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using CreativeSpore.RpgMapEditor;
-using UnityEngine.Profiling;
-using LiteNetLibManager;
+﻿using UnityEngine;
 
 namespace MultiplayerARPG
 {
@@ -17,7 +12,7 @@ namespace MultiplayerARPG
         public override void InitialRequiredComponents()
         {
             if (Movement == null)
-                Movement = gameObject.AddComponent<CSPhysicCharacterMovement>();
+                Debug.LogError("[" + ToString() + "] Did not setup entity movement component to this entity.");
         }
     }
 }

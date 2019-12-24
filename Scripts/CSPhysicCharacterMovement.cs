@@ -22,7 +22,7 @@ namespace MultiplayerARPG
 
         private Vector2 tempMoveDirection;
 
-        protected override void FixedUpdate()
+        public override void EntityFixedUpdate()
         {
             if (movementSecure == MovementSecure.ServerAuthoritative && !IsServer)
                 return;
