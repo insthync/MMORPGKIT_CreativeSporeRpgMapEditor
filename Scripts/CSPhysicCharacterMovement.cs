@@ -24,10 +24,10 @@ namespace MultiplayerARPG
 
         public override void EntityFixedUpdate()
         {
-            if (movementSecure == MovementSecure.ServerAuthoritative && !IsServer)
+            if (CacheEntity.MovementSecure == MovementSecure.ServerAuthoritative && !IsServer)
                 return;
 
-            if (movementSecure == MovementSecure.NotSecure && !IsOwnerClient)
+            if (CacheEntity.MovementSecure == MovementSecure.NotSecure && !IsOwnerClient)
                 return;
 
             if (currentDestination.HasValue)
