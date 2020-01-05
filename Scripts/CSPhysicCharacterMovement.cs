@@ -9,18 +9,15 @@ namespace MultiplayerARPG
     [RequireComponent(typeof(PhysicCharBehaviour))]
     public class CSPhysicCharacterMovement : RigidBodyEntityMovement2D
     {
-        private PhysicCharBehaviour cachePhysicCharBehaviour;
-        public PhysicCharBehaviour CachePhysicCharBehaviour
-        {
-            get
-            {
-                if (cachePhysicCharBehaviour == null)
-                    cachePhysicCharBehaviour = GetComponent<PhysicCharBehaviour>();
-                return cachePhysicCharBehaviour;
-            }
-        }
+        public PhysicCharBehaviour CachePhysicCharBehaviour { get; private set; }
 
         private Vector2 tempMoveDirection;
+
+        public override void EntityAwake()
+        {
+            base.EntityAwake();
+            CachePhysicCharBehaviour = GetComponent<PhysicCharBehaviour>();
+        }
 
         public override void EntityFixedUpdate()
         {
